@@ -28,6 +28,7 @@
   <script src="js/dv.js"></script>
   <script src="js/coordinates.js"></script>
   <script src="js/raphael-min.js"></script>
+  <script src="avgValue.js"></script>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
      <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -183,7 +184,7 @@ function onHover() {
 
 
         var fakeID = this.data("fakeID");
-        console.log(fakeID);
+        //(fakeID);
         var textStr1 = "Group " + fakeID + " features";
 
         textTitle = paper.text(this.getBBox().x+72, this.getBBox().y+40, textStr1);
@@ -217,7 +218,79 @@ function onHover() {
 
                        
       }
-          
+   
+
+   /*function drawAverageValues() {
+
+        avgBox = paper.rect(80, 20, 500, 100, 8);
+        avgBox.attr({'fill':'#003A6F', 'stroke': '#003A6F', 'opacity':'.8','fill-opacity':'.8', 'stroke-width':'2'});
+
+        var currentX = 100;
+
+
+        /*
+        $.each(avgValue, function (key,value) {
+          console.log(key + ':' + value);
+        });
+        */
+
+        var xConsistent = 100;
+
+        var xLooping = 80;
+
+
+        console.log(avgValue["1"]);
+
+        for (var i = 0; i < 5; i++) {
+
+
+
+          var key = "" + i;
+
+
+          var objReturned = avgValue[key];
+
+          for (var j = 0; j < objReturned.length; j++) {
+            console.log("iterating" + objReturned[j]);
+          }
+          console.log("The current height should be: " + objReturned["degree"]);
+
+        }
+        //var b1 = JSON.parse(json1);
+        //var length = json1.length;
+        ////(length);
+
+        /*//(json1);
+        for (var i = 0; i < json1.length; i++) {
+          //("The key trial 2 is: " + json1[i][0]);
+        }
+        for (var key in avgValue) {
+
+          ////("We are on key : " + key);
+
+
+          //("The object is" + key["averageTimeToPayBill"]);
+          for (var i = 0; i < 5; i++) {
+
+
+            var lookup = "" + i;
+
+            var currValue = key[lookup];
+
+            currentBox = paper.rect(currentX, 50, 15, currValue * 5, 0);
+
+            currentBox.attr({'fill':'#ff0000', 'stroke': '#003A6F', 'opacity':'.8','fill-opacity':'.8', 'stroke-width':'2'});
+
+
+          }
+
+
+        }*/
+
+        
+
+
+       
 function onOut() {
         box.hide();
         textField.hide();
@@ -231,11 +304,11 @@ function onOut() {
 
 
       function onClick() {
-        console.log("JUST CLICKED THIS THING");
+        //("JUST CLICKED THIS THING");
         var curColor = this.data("color");
         var originX = this.getBBox().x;
         var originY = this.getBBox().y;
-        console.log("curColor is: " + curColor);
+        //("curColor is: " + curColor);
         paper.forEach(function (el) {
           if (el.data("color") == curColor) {
 
@@ -249,7 +322,7 @@ function onOut() {
 
       function drawConnectingPath(originX, originY, endX, endY, color) {
         var travelled = "M" + originX +"," + originY + "L" + endX + "," + endY;
-        console.log("the travelled path is: " + travelled);
+        //("the travelled path is: " + travelled);
         var travelPath = paper.path(travelled).attr({'opacity':'0.15', 'stroke-width':'1', 'stroke':color});
       }
 
@@ -258,20 +331,20 @@ function onOut() {
             // This is the base paper. Width will be 1000 px and Height will be 3000 px
             paper = Raphael(document.getElementById('canvas'), '85%','50%');
             paper.setViewBox(0,0, 700, 2500, true);
-
+            drawAverageValues();
             textTitle = paper.text(0,0,"");
             textField = paper.text(0,0,"");
             box = paper.rect(0,0,0,0,0);
 
             //var bigCircle = paper.circle(500, 1000, 40);
             var colors = ['#CF000F', '#663399', '#22A7F0', '#00B16A', '#F39C12', '#67809F', '#26A65B'];
-            for (var i = 1; i <coordinates.length; i = i + 10) {
+            for (var i = 1; i <coordinates.length; i = i + 2) {
               //var color = Math.round(6 * Math.random());
               //var x = Math.round(1200 * Math.random())  + 75;
               //var y = Math.round(300 * Math.random()) + 100;
               var color = coordinates[i]["category"];
               var x = coordinates[i]["x"] * 10 + 400;
-              console.log("The x value is: " + x);
+              //("The x value is: " + x);
               var y = coordinates[i]["y"] * 5 + 180;
               var circle = paper.circle(x,y, 2).attr({'fill':colors[color], 'stroke-opacity' : '0', 'stroke-width':'3'});
               //var circle = paper.circle(x,y, 2).attr({'fill':'white', 'stroke-opacity' : '0'});
@@ -290,13 +363,13 @@ function onOut() {
               // set four will be 600 to 1200
               // set five will be 800 to 1400
               for (var m = 0; m < 5; m++) {
-                console.log("The color valueis : " + color);
+                //("The color valueis : " + color);
                 if (color == m) {
                   //var upperBound = (m+1) *200 + 600;
                   var lowerBound = (m) * 200;
                   
                   var latLongPicker = Math.round(600 * Math.random()) + lowerBound;
-                  console.log("The index  for latlong pick is: " + latLongPicker);
+                  //("The index  for latlong pick is: " + latLongPicker);
                 }
               }
               //var latLongPicker = Math.round(1455 * Math.random());
@@ -319,8 +392,8 @@ function onOut() {
             bucketPlacement(bucketSize);
             /*
             for (var k = 0; k < loc.length; k++) {
-        //console.log("hello");
-        //console.log(loc[k][0]);
+        ////("hello");
+        ////(loc[k][0]);
         var circle = paper.circle(1600 - parseFloat(loc[k][0]), 2000 - parseFloat(loc[k][1]), 2).attr({'fill':'red', 'stroke-opacity' : '0'});
         
       }
@@ -338,14 +411,14 @@ function onOut() {
       scroll = scroll / (($(window).width()) / 1300);
       // Do something
       if (scroll > 200 && scroll < 800) {
-          //console.log("Bucket size is : " + bucketSize);
+          ////("Bucket size is : " + bucketSize);
           if (notClearedChart) {
             bucketPlacement(bucketSize);
             paper.forEach(function (el) {
               var tString = createBarGraph(el, scroll);
               el.transform(tString);
-          //console.log(tString);
-          //console.log("800-1100: The x value of the transformed thing is: " + el.attr('x') + " and y is : " + el.attr('y'));
+          ////(tString);
+          ////("800-1100: The x value of the transformed thing is: " + el.attr('x') + " and y is : " + el.attr('y'));
           
         });
           }
@@ -358,16 +431,16 @@ function onOut() {
         }
         else if (scroll >= 1100 && scroll < 1400) {
           //bucketPlacement(bucketSize);
-          //console.log("We are in the scroll 1100  - 1250");
+          ////("We are in the scroll 1100  - 1250");
           if (notClearedDot) {
             paper.forEach(function (el) {
-          //console.log("The X coordinate is: " + el.data("barX") +", the Y coordinate is:  " + el.data('barY'));
+          ////("The X coordinate is: " + el.data("barX") +", the Y coordinate is:  " + el.data('barY'));
           //el.attr({'x':el.attr('barX')});
           //el.attr({'y':el.attr('barY')});
           var togetherString = comeTogether(el, scroll);
-          //console.log("The x value of the transformed thing is: " + el.attr('x') + " and y is : " + el.attr('y'));
+          ////("The x value of the transformed thing is: " + el.attr('x') + " and y is : " + el.attr('y'));
           el.transform(togetherString);
-          //console.log("The x value of the transformed thing is: " + el.attr('x') + " and y is : " + el.attr('y'));
+          ////("The x value of the transformed thing is: " + el.attr('x') + " and y is : " + el.attr('y'));
         });
           }
         } else if (scroll >= 1400 && scroll < 1500) {
@@ -453,9 +526,9 @@ function makeMap(el, scroll) {
               paper.forEach(function (el) {
                 var mString = updateBarChart(el, 800);
                 el.transform(mString);
-            //console.log("800-1100: The x value of the transformed thing is: " + el.attr('x') + " and y is : " + el.attr('y'));
+            ////("800-1100: The x value of the transformed thing is: " + el.attr('x') + " and y is : " + el.attr('y'));
             if (rec) {
-              console.log("The bar X is: " + el.data('barX'));
+              //("The bar X is: " + el.data('barX'));
               var k = new barPoint(el.data('barX'), el.data('barY'), el.data('lat'), el.data('longi'), el.data('color'));
               barPoints.push(k);
             } else {
@@ -465,8 +538,8 @@ function makeMap(el, scroll) {
           });
               paper.clear();
               for (var i = 0; i < barPoints.length; i++) {
-                console.log(barPoints[i].x);
-                console.log(barPoints[i].color);
+                //(barPoints[i].x);
+                //(barPoints[i].color);
                 var circle = paper.circle(barPoints[i].x,barPoints[i].y, 2).attr({'fill':barPoints[i].color, 'stroke-opacity' : '0'});
                 circle.data("x", barPoints[i].x);
                 circle.data("y", barPoints[i].y);
@@ -476,46 +549,46 @@ function makeMap(el, scroll) {
                 circle.mouseover(onHover);
                 circle.mouseout(onOut);
                 circle.click(onClick);
-                console.log("Just created a new circle!");
+                //("Just created a new circle!");
               }
             }
             function comeTogether(el, scroll) {
         //var bigCircle = paper.circle(500, 1600, 40);
-              //console.log("The x value of the transformed thing is: " + el.attr('x') + " and y is : " + el.attr('y'));
-              //console.log("The x value is: " + el.attr("x"));
+              ////("The x value of the transformed thing is: " + el.attr('x') + " and y is : " + el.attr('y'));
+              ////("The x value is: " + el.attr("x"));
               var originX = el.data("x");
               var originY = el.data("y");
-              //console.log("Origins" + originX);
+              ////("Origins" + originX);
               var scrollPercentage = (scroll-1100) / 300;
               
               var endX = 400;
               var endY = 1600;
-              //console.log("Ends" + endY);
-              //console.log("ScrollPercentage" + scrollPercentage);
+              ////("Ends" + endY);
+              ////("ScrollPercentage" + scrollPercentage);
               var currentX = (endX - originX) * scrollPercentage;
               var currentY = (endY - originY) * scrollPercentage;
               // we have a start X and Y --> we need to store this
               
               var retString = "t" + currentX +"," + currentY;
-              console.log(retString);
+              //(retString);
               return retString;
             } 
             
             function createBarGraph(el, scroll) {
-          //console.log("X is: " + buckets[i].x);
-          //console.log(buckets[i].color);
+          ////("X is: " + buckets[i].x);
+          ////(buckets[i].color);
           for (var j = 0; j < buckets.length; j++) {
             if (buckets[j].color == el.name) {
-              //console.log("The x value is: " + el.attr("x"));
+              ////("The x value is: " + el.attr("x"));
               var originX = el.data("originX");
               var originY = el.data("originY");
-              //console.log("Origins" + originX);
+              ////("Origins" + originX);
               var scrollPercentage = (scroll-200) / 600;
               
               var endX = buckets[j].x;
               var endY = buckets[j].yEnd;
-              //console.log("Ends" + endY);
-              //console.log("ScrollPercentage" + scrollPercentage);
+              ////("Ends" + endY);
+              ////("ScrollPercentage" + scrollPercentage);
               var currentX = (endX - originX) * scrollPercentage;
               var currentY = (endY - originY) * scrollPercentage;
               // we have a start X and Y --> we need to store this
@@ -534,26 +607,26 @@ function makeMap(el, scroll) {
           }
         }
         function updateBarChart(el, scroll) {
-          //console.log("X is: " + buckets[i].x);
-          //console.log(buckets[i].color);
+          ////("X is: " + buckets[i].x);
+          ////(buckets[i].color);
           for (var j = 0; j < buckets.length; j++) {
             if (buckets[j].color == el.name) {
-              //console.log("The x value is: " + el.attr("x"));
+              ////("The x value is: " + el.attr("x"));
               var originX = el.data("originX");
               var originY = el.data("originY");
-              //console.log("Origins" + originX);
+              ////("Origins" + originX);
               var scrollPercentage = (scroll-200) / 600;
               
               var endX = buckets[j].x;
               var endY = buckets[j].yEnd;
-              //console.log("Ends" + endY);
-              //console.log("ScrollPercentage" + scrollPercentage);
+              ////("Ends" + endY);
+              ////("ScrollPercentage" + scrollPercentage);
               var currentX = (endX - originX) * scrollPercentage;
               var currentY = (endY - originY) * scrollPercentage;
               // we have a start X and Y --> we need to store this
               el.data("barX", endX);
               el.data("barY", endY);
-              console.log("BAR X IS : " + el.data("barX"));
+              //("BAR X IS : " + el.data("barX"));
               buckets[j]["x"] += 10;
               if (currentX < buckets[j].xStart) {
                 var retString = "T" + currentX +"," + currentY;
@@ -571,7 +644,7 @@ function makeMap(el, scroll) {
         function bucketPlacement(numBuckets) {
           var bucketLength = (700 / numBuckets);
           bucketLength = bucketLength - 10;
-        //console.log("Bucket length is : " + bucketLength);
+        ////("Bucket length is : " + bucketLength);
         var startOfNewBucket = 10;
         var padding = 10;
         for (var i = 0; i < numBuckets; i++) {
@@ -2048,6 +2121,7 @@ function makeMap(el, scroll) {
       loc[1456] = ['1541.7856', '445.34027'];
       loc[1457] = ['1599.0775', '632.0392'];
       loc[1458] = ['1523.5935', '425.8176'];
+
 
     </script>
 
